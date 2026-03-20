@@ -112,14 +112,20 @@ export default function SignNavigation() {
     try {
       setCameraError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 320, height: 240, facingMode: "user" },
+        video: { width: { ideal: 320 }, height: { ideal: 240 }, facingMode: "user" },
+        audio: false,
       });
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        videoRef.current.muted = true;
+        videoRef.current.playsInline = true;
+        // Wait for video to be ready before showing
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play().catch(() => {});
+          setShowCamera(true);
+        };
       }
-      setShowCamera(true);
     } catch (err: any) {
       setCameraError("Camera access denied. Please allow camera permission.");
       console.error("Camera error:", err);
@@ -433,19 +439,24 @@ export default function SignNavigation() {
           </div>
 
           {/* Camera */}
-          <div className="relative" style={{ width: 340, height: 255 }}>
+          <div className="relative" style={{ width: 340, height: 255, overflow: "hidden" }}>
             <video
               ref={videoRef}
-              className="absolute inset-0 w-full h-full object-cover"
+              width={340}
+              height={255}
+              className="block w-full h-full object-cover"
               style={{ transform: "scaleX(-1)" }}
               muted
               playsInline
+              autoPlay
               aria-hidden="true"
             />
             <canvas
               ref={canvasRef}
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ transform: "scaleX(-1)" }}
+              width={320}
+              height={240}
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              style={{ transform: "scaleX(-1)", opacity: 0.6 }}
               aria-hidden="true"
             />
 
