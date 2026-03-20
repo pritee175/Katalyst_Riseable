@@ -391,14 +391,16 @@ export default function SignNavigation() {
         <Hand size={22} />
       </button>
 
-      {/* Camera Feed Window */}
+      {/* Camera Feed Window — fixed position, high z-index */}
       {isEnabled && showCamera && !isMinimized && (
         <div
-          className="fixed bottom-56 right-6 z-50 rounded-2xl shadow-2xl border overflow-hidden"
+          className="fixed z-[9999] rounded-2xl shadow-2xl overflow-hidden"
           style={{
+            bottom: "230px",
+            right: "24px",
             width: "340px",
-            backgroundColor: "var(--color-bg)",
-            borderColor: isEnabled ? "#02C39A" : "var(--color-border)",
+            border: "3px solid #02C39A",
+            backgroundColor: "#000",
           }}
           role="region"
           aria-label="Sign navigation camera"
@@ -407,14 +409,14 @@ export default function SignNavigation() {
           <div className="flex items-center justify-between px-3 py-2"
             style={{ background: "linear-gradient(135deg, #028090, #02C39A)" }}>
             <div className="flex items-center gap-2 text-white">
-              <Navigation size={14} />
+              <Camera size={14} />
               <span className="text-xs font-semibold">Sign Navigation</span>
               <span className={`w-2 h-2 rounded-full ${handDetected ? "bg-green-300 animate-pulse" : "bg-red-300"}`} />
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setShowGuide(!showGuide)}
-                className="p-1 rounded hover:bg-white/20 text-white text-xs"
+                className="p-1 rounded hover:bg-white/20 text-white text-xs font-bold"
                 aria-label="Show gesture guide"
                 title="Gesture Guide"
               >
@@ -426,7 +428,7 @@ export default function SignNavigation() {
                 aria-label="Minimize camera"
                 title="Minimize"
               >
-                <span className="text-xs">—</span>
+                <span className="text-xs font-bold">—</span>
               </button>
               <button
                 onClick={toggleSignNav}
@@ -438,30 +440,33 @@ export default function SignNavigation() {
             </div>
           </div>
 
-          {/* Camera */}
-          <div className="relative" style={{ width: 340, height: 255, overflow: "hidden" }}>
+          {/* Camera - video is the main visible element, canvas is hidden (only used for processing) */}
+          <div style={{ position: "relative", width: "340px", height: "255px", background: "#000" }}>
             <video
               ref={videoRef}
-              width={340}
-              height={255}
-              className="block w-full h-full object-cover"
-              style={{ transform: "scaleX(-1)" }}
+              style={{
+                display: "block",
+                width: "340px",
+                height: "255px",
+                objectFit: "cover",
+                transform: "scaleX(-1)",
+              }}
               muted
               playsInline
               autoPlay
               aria-hidden="true"
             />
+            {/* Hidden canvas — only used for pixel analysis, NOT displayed */}
             <canvas
               ref={canvasRef}
               width={320}
               height={240}
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              style={{ transform: "scaleX(-1)", opacity: 0.6 }}
+              style={{ display: "none" }}
               aria-hidden="true"
             />
 
-            {/* Status overlay */}
-            <div className="absolute top-2 left-2 flex items-center gap-2">
+            {/* Status badge overlay */}
+            <div style={{ position: "absolute", top: "8px", left: "8px", display: "flex", gap: "6px", zIndex: 10 }}>
               <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${handDetected ? "bg-green-500/90 text-white" : "bg-red-500/80 text-white"}`}>
                 {handDetected ? "HAND DETECTED" : "NO HAND"}
               </span>
@@ -472,9 +477,26 @@ export default function SignNavigation() {
               )}
             </div>
 
+            {/* Hand circle indicator overlay */}
+            {handDetected && (
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "80px",
+                height: "80px",
+                border: "3px solid #02C39A",
+                borderRadius: "50%",
+                opacity: 0.5,
+                pointerEvents: "none",
+                zIndex: 10,
+              }} />
+            )}
+
             {/* Gesture indicator */}
             {currentGesture && (
-              <div className="absolute bottom-0 left-0 right-0 px-3 py-2" style={{ background: "rgba(0,0,0,0.75)" }}>
+              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "8px 12px", background: "rgba(0,0,0,0.8)", zIndex: 10 }}>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-green-300 font-semibold">
                     {gestureActions.find(a => a.gesture === currentGesture)?.name}
@@ -483,14 +505,12 @@ export default function SignNavigation() {
                     {gestureActions.find(a => a.gesture === currentGesture)?.description}
                   </span>
                 </div>
-                {/* Progress bar — fills up during 1.5s hold */}
-                <div className="w-full h-1 mt-1 rounded-full bg-gray-600 overflow-hidden">
+                <div className="w-full h-1.5 mt-1 rounded-full bg-gray-600 overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all"
+                    className="h-full rounded-full"
                     style={{
-                      width: `${gestureConfidence}%`,
                       background: "linear-gradient(90deg, #02C39A, #00A896)",
-                      animation: "fillBar 1.5s linear forwards",
+                      animation: "signNavFill 1.5s linear forwards",
                     }}
                   />
                 </div>
@@ -500,21 +520,21 @@ export default function SignNavigation() {
 
           {/* Last action */}
           {lastAction && (
-            <div className="px-3 py-1.5 text-[10px] text-center" style={{ backgroundColor: "var(--color-bg-secondary)", color: "#02C39A" }}>
-              Last action: {lastAction}
+            <div className="px-3 py-1.5 text-[10px] text-center" style={{ backgroundColor: "#112845", color: "#02C39A" }}>
+              Last: {lastAction}
             </div>
           )}
 
           {/* Gesture Guide */}
           {showGuide && (
-            <div className="px-3 py-2 border-t" style={{ borderColor: "var(--color-border)", backgroundColor: "var(--color-bg)" }}>
-              <p className="text-[10px] font-semibold mb-1.5" style={{ color: "var(--color-text)" }}>
-                Gesture Guide (hold 1.5s to activate):
+            <div className="px-3 py-2 border-t" style={{ borderColor: "#1e3a5f", backgroundColor: "#0B1D35" }}>
+              <p className="text-[10px] font-semibold mb-1.5 text-white">
+                Gesture Guide (hold 1.5s):
               </p>
               <div className="grid grid-cols-2 gap-1">
                 {gestureActions.map(ga => (
-                  <div key={ga.gesture} className="flex items-center gap-1.5 text-[9px] py-0.5" style={{ color: "var(--color-text-muted)" }}>
-                    <span className="w-4 h-4 flex items-center justify-center rounded" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
+                  <div key={ga.gesture} className="flex items-center gap-1.5 text-[9px] py-0.5 text-gray-300">
+                    <span className="w-4 h-4 flex items-center justify-center rounded bg-gray-700">
                       {ga.icon}
                     </span>
                     <span><b>{ga.name}</b> → {ga.description}</span>
@@ -526,7 +546,7 @@ export default function SignNavigation() {
 
           {/* Camera error */}
           {cameraError && (
-            <div className="px-3 py-2 text-xs text-center text-red-400" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
+            <div className="px-3 py-2 text-xs text-center text-red-400 bg-gray-900">
               {cameraError}
             </div>
           )}
@@ -537,8 +557,10 @@ export default function SignNavigation() {
       {isEnabled && isMinimized && (
         <button
           onClick={() => setIsMinimized(false)}
-          className="fixed bottom-56 right-6 z-50 px-3 py-2 rounded-xl shadow-lg flex items-center gap-2 transition-all hover:scale-105"
+          className="fixed z-[9999] px-3 py-2 rounded-xl shadow-lg flex items-center gap-2 transition-all hover:scale-105"
           style={{
+            bottom: "230px",
+            right: "24px",
             background: "linear-gradient(135deg, #028090, #02C39A)",
             color: "#fff",
           }}
@@ -551,8 +573,8 @@ export default function SignNavigation() {
       )}
 
       {/* CSS for fill animation */}
-      <style jsx>{`
-        @keyframes fillBar {
+      <style jsx global>{`
+        @keyframes signNavFill {
           from { width: 0%; }
           to { width: 100%; }
         }
