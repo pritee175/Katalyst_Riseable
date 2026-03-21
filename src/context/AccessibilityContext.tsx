@@ -13,6 +13,7 @@ interface AccessibilityState {
   screenReaderMode: boolean;
   voiceNavigationEnabled: boolean;
   reducedMotion: boolean;
+  gestureNavigationEnabled: boolean;
 }
 
 interface AccessibilityContextType extends AccessibilityState {
@@ -22,6 +23,7 @@ interface AccessibilityContextType extends AccessibilityState {
   toggleScreenReaderMode: () => void;
   toggleVoiceNavigation: () => void;
   toggleReducedMotion: () => void;
+  toggleGestureNavigation: () => void;
   announceToScreenReader: (message: string) => void;
 }
 
@@ -35,6 +37,7 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
     screenReaderMode: false,
     voiceNavigationEnabled: false,
     reducedMotion: false,
+    gestureNavigationEnabled: false,
   });
 
   // Load preferences from localStorage on mount
@@ -90,6 +93,10 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
     setState(prev => ({ ...prev, reducedMotion: !prev.reducedMotion }));
   }, []);
 
+  const toggleGestureNavigation = useCallback(() => {
+    setState(prev => ({ ...prev, gestureNavigationEnabled: !prev.gestureNavigationEnabled }));
+  }, []);
+
   // Announce messages to screen readers via a live region
   const announceToScreenReader = useCallback((message: string) => {
     const el = document.getElementById("sr-announcer");
@@ -112,6 +119,7 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
         toggleScreenReaderMode,
         toggleVoiceNavigation,
         toggleReducedMotion,
+        toggleGestureNavigation,
         announceToScreenReader,
       }}
     >

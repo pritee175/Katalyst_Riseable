@@ -7,11 +7,11 @@ export default function HomePage() {
     <>
       <HeroSection />
       <FeaturesSection />
-      
+
       {/* Inspiring Image Banner */}
       <section className="relative h-96 overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=1920&q=80" 
+        <img
+          src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=1920&q=80"
           alt="People working together and achieving success"
           className="w-full h-full object-cover"
         />
@@ -41,7 +41,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      
+
       <TestimonialsSection />
     </>
   );

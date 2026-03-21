@@ -19,7 +19,7 @@ export default function HeroSection() {
           style={{ background: "radial-gradient(circle, #a78bfa, transparent 70%)" }} />
         <div className="absolute top-1/3 left-1/2 w-[300px] h-[300px] rounded-full opacity-[0.04] animate-float-slow delay-500"
           style={{ background: "radial-gradient(circle, #38bdf8, transparent 70%)" }} />
-        
+
         {/* Floating decorative elements */}
         <div className="absolute top-20 left-10 w-4 h-4 rounded-full bg-purple-400/20 animate-ping" />
         <div className="absolute bottom-40 right-20 w-3 h-3 rounded-full bg-blue-400/20 animate-ping" style={{ animationDelay: "1s" }} />
@@ -91,34 +91,34 @@ export default function HeroSection() {
             <div className="relative w-full max-w-lg mx-auto">
               {/* Main hero image */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl animate-glow">
-                <img 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80" 
+                <img
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
                   alt="People collaborating and learning together"
                   className="w-full h-auto aspect-square object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
-              
+
               {/* Floating image cards */}
               <div className="absolute -top-6 -left-6 w-32 h-32 rounded-2xl overflow-hidden shadow-xl animate-float delay-200">
-                <img 
-                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&q=80" 
+                <img
+                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&q=80"
                   alt="Student learning online"
                   className="w-full h-full object-cover"
                 />
               </div>
-              
+
               <div className="absolute -bottom-6 -right-6 w-36 h-36 rounded-2xl overflow-hidden shadow-xl animate-float-slow delay-400">
-                <img 
-                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&q=80" 
+                <img
+                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&q=80"
                   alt="Professional working at desk"
                   className="w-full h-full object-cover"
                 />
               </div>
-              
+
               <div className="absolute top-1/2 -right-8 w-24 h-24 rounded-2xl overflow-hidden shadow-xl animate-float delay-600">
-                <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" 
+                <img
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80"
                   alt="Person using assistive technology"
                   className="w-full h-full object-cover"
                 />

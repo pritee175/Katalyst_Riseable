@@ -12,6 +12,7 @@ import {
   Eye,
   X,
   Minus,
+  Hand,
 } from "lucide-react";
 
 export default function AccessibilityToolbar() {
@@ -22,11 +23,15 @@ export default function AccessibilityToolbar() {
     fontType,
     voiceNavigationEnabled,
     reducedMotion,
+    gestureNavigationEnabled,
     setTheme,
     setTextSize,
     setFontType,
     toggleVoiceNavigation,
     toggleReducedMotion,
+    toggleGestureNavigation,
+    screenReaderMode,
+    toggleScreenReaderMode,
   } = useAccessibility();
 
   return (
@@ -34,7 +39,7 @@ export default function AccessibilityToolbar() {
       {/* Floating toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-white transition-transform hover:scale-110"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-white transition-transform hover:scale-110"
         style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
         aria-label={isOpen ? "Close accessibility settings" : "Open accessibility settings"}
         aria-expanded={isOpen}
@@ -50,7 +55,7 @@ export default function AccessibilityToolbar() {
           role="dialog"
           aria-label="Accessibility Settings"
           aria-modal="false"
-          className="fixed bottom-24 right-6 z-50 w-80 rounded-2xl shadow-2xl border p-5 animate-fade-in-up"
+          className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-50 w-[calc(100vw-32px)] sm:w-80 max-w-sm rounded-2xl shadow-2xl border p-4 sm:p-5 animate-fade-in-up"
           style={{
             backgroundColor: "var(--color-bg)",
             borderColor: "var(--color-border)",
@@ -176,6 +181,24 @@ export default function AccessibilityToolbar() {
 
             <label className="flex items-center justify-between cursor-pointer">
               <span className="flex items-center gap-2 text-sm" style={{ color: "var(--color-text)" }}>
+                <Hand size={16} aria-hidden="true" /> Gesture Navigation (ISL)
+              </span>
+              <button
+                role="switch"
+                aria-checked={gestureNavigationEnabled}
+                onClick={toggleGestureNavigation}
+                className="relative w-11 h-6 rounded-full transition-colors"
+                style={{ backgroundColor: gestureNavigationEnabled ? "var(--color-primary)" : "var(--color-border)" }}
+              >
+                <span
+                  className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform"
+                  style={{ transform: gestureNavigationEnabled ? "translateX(20px)" : "translateX(0)" }}
+                />
+              </button>
+            </label>
+
+            <label className="flex items-center justify-between cursor-pointer">
+              <span className="flex items-center gap-2 text-sm" style={{ color: "var(--color-text)" }}>
                 <Minus size={16} aria-hidden="true" /> Reduced Motion
               </span>
               <button
@@ -196,11 +219,35 @@ export default function AccessibilityToolbar() {
               <span className="flex items-center gap-2 text-sm" style={{ color: "var(--color-text)" }}>
                 <Eye size={16} aria-hidden="true" /> Screen Reader Mode
               </span>
-              <span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: "var(--color-bg-secondary)", color: "var(--color-text-muted)" }}>
-                Use system SR
-              </span>
+              <button
+                role="switch"
+                aria-checked={screenReaderMode}
+                onClick={toggleScreenReaderMode}
+                className="relative w-11 h-6 rounded-full transition-colors"
+                style={{ backgroundColor: screenReaderMode ? "var(--color-primary)" : "var(--color-border)" }}
+              >
+                <span
+                  className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform"
+                  style={{ transform: screenReaderMode ? "translateX(20px)" : "translateX(0)" }}
+                />
+              </button>
             </label>
           </div>
+
+          {/* Gesture Navigation Help */}
+          {gestureNavigationEnabled && (
+            <div className="mt-4 p-3 rounded-lg text-xs" style={{ backgroundColor: "var(--color-bg-secondary)", color: "var(--color-text-secondary)" }}>
+              <p className="font-semibold mb-1">Gesture Controls:</p>
+              <ul className="space-y-0.5">
+                <li>☝️ 1 Finger — Go to Home</li>
+                <li>✌️ 2 Fingers — Go to Courses</li>
+                <li>🤟 3 Fingers — Go to Jobs</li>
+                <li>🖖 4 Fingers — Go to Schemes</li>
+                <li>✋ 5 Fingers — Go to AI Chat</li>
+                <li>✊ Fist (0) — Scroll Down</li>
+              </ul>
+            </div>
+          )}
 
           {/* Voice Commands Help */}
           {voiceNavigationEnabled && (

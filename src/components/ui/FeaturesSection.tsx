@@ -26,8 +26,8 @@ export default function FeaturesSection() {
       >
         {/* Background image with overlay */}
         <div className="absolute inset-0 opacity-5" aria-hidden="true">
-          <img 
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80" 
+          <img
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80"
             alt=""
             className="w-full h-full object-cover"
           />
@@ -60,9 +60,9 @@ export default function FeaturesSection() {
               >
                 {/* Background gradient effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(circle at top right, ${feature.color}15, transparent 70%)` }} 
+                  style={{ background: `radial-gradient(circle at top right, ${feature.color}15, transparent 70%)` }}
                   aria-hidden="true" />
-                
+
                 {/* Animated icon container */}
                 <div className="relative w-16 h-16 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                   style={{ background: `linear-gradient(135deg, ${feature.color}30, ${feature.color}15)` }}>
@@ -71,7 +71,7 @@ export default function FeaturesSection() {
                   <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse"
                     style={{ boxShadow: `0 0 30px ${feature.color}40` }} />
                 </div>
-                
+
                 <h3 className="relative font-semibold text-base mb-2" style={{ color: "var(--color-text)" }}>{feature.title}</h3>
                 <p className="relative text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{feature.description}</p>
               </div>

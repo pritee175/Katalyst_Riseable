@@ -261,8 +261,8 @@ export default function ChatPage() {
                 </div>
               </div>
 
-              {/* Right: Accessibility Controls */}
-              <div className="flex items-center gap-2 flex-wrap relative z-20">
+              {/* Right: Accessibility Controls — hidden on mobile, use floating toolbar instead */}
+              <div className="hidden md:flex items-center gap-2 flex-wrap relative z-20">
                 
                 {/* Theme Selector */}
                 <div className="flex items-center gap-1 p-1 rounded-xl" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
@@ -461,68 +461,30 @@ export default function ChatPage() {
                   ISL
                 </button>
 
-                {/* Language Selector */}
-                <div className="relative">
-                  <button
-                    onClick={() => {
-                      setShowLanguagePanel(!showLanguagePanel);
-                      setShowAccessibilityPanel(false);
+                {/* Language Select Box */}
+                <div className="flex items-center gap-2">
+                  <Languages size={16} style={{ color: "var(--color-text-muted)" }} />
+                  <select
+                    value={language}
+                    onChange={(e) => {
+                      const newLang = e.target.value as typeof language;
+                      setLanguage(newLang);
+                      announceToScreenReader(`Language changed to ${languages.find(l => l.code === newLang)?.name}`);
                     }}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105"
+                    className="px-3 py-2 rounded-xl text-sm font-medium cursor-pointer outline-none"
                     style={{
                       backgroundColor: "var(--color-bg-secondary)",
                       color: "var(--color-text)",
+                      border: "2px solid var(--color-primary)",
                     }}
                     aria-label="Select language"
-                    aria-expanded={showLanguagePanel}
-                    title="Language Selection"
                   >
-                    <Languages size={16} />
-                    {languages.find(l => l.code === language)?.nativeName}
-                  </button>
-
-                  {/* Language Dropdown */}
-                  {showLanguagePanel && (
-                    <>
-                      {/* Backdrop to close dropdown and prevent collisions */}
-                      <div 
-                        className="fixed inset-0 z-[100]" 
-                        onClick={() => setShowLanguagePanel(false)}
-                        aria-hidden="true"
-                      />
-                      <div
-                        className="absolute top-full right-0 mt-2 w-56 rounded-xl border shadow-2xl p-2 z-[110] animate-fade-in-up"
-                        style={{
-                          backgroundColor: "var(--color-bg)",
-                          borderColor: "var(--color-border)",
-                        }}
-                      >
-                        <p className="text-xs font-semibold px-3 py-2" style={{ color: "var(--color-text-muted)" }}>
-                          Select Language
-                        </p>
-                        {languages.map(lang => (
-                          <button
-                            key={lang.code}
-                            onClick={() => {
-                              setLanguage(lang.code);
-                              setShowLanguagePanel(false);
-                              announceToScreenReader(`Language changed to ${lang.name}`);
-                            }}
-                            className="w-full text-left px-3 py-2 rounded-lg text-sm transition-colors hover:scale-105"
-                            style={{
-                              backgroundColor: language === lang.code ? "var(--color-primary)" : "transparent",
-                              color: language === lang.code ? "#fff" : "var(--color-text)",
-                            }}
-                          >
-                            <span className="font-medium">{lang.nativeName}</span>
-                            <span className="text-xs ml-2" style={{ opacity: 0.7 }}>
-                              {lang.name}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
+                    {languages.map(lang => (
+                      <option key={lang.code} value={lang.code}>
+                        {lang.nativeName} — {lang.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* More Accessibility Settings */}
@@ -655,7 +617,61 @@ export default function ChatPage() {
           </div>
         </header>
 
-        {/* Quick Actions - Below Header */}
+        {/* Language Select Bar + Read Aloud */}
+        <div className="flex-shrink-0 px-4 sm:px-6 lg:px-8 py-3 border-b" style={{ borderColor: "var(--color-border)" }}>
+          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+            {/* Language Select Box */}
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <Globe size={16} className="shrink-0" style={{ color: "var(--color-text-muted)" }} />
+              <span className="text-xs font-semibold shrink-0 hidden sm:inline" style={{ color: "var(--color-text-muted)" }}>Language:</span>
+              <select
+                value={language}
+                onChange={(e) => {
+                  const newLang = e.target.value as typeof language;
+                  setLanguage(newLang);
+                  announceToScreenReader(`Language changed to ${languages.find(l => l.code === newLang)?.name}`);
+                }}
+                className="px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold cursor-pointer outline-none w-full sm:w-auto"
+                style={{
+                  backgroundColor: "var(--color-bg-secondary)",
+                  color: "var(--color-text)",
+                  border: "2px solid var(--color-primary)",
+                  minWidth: "150px",
+                  maxWidth: "220px",
+                }}
+                aria-label="Select chat language"
+              >
+                {languages.map(lang => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.nativeName} — {lang.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Read Aloud Toggle */}
+            <button
+              onClick={() => {
+                setTtsEnabled(!ttsEnabled);
+                if (isSpeaking) stop();
+                announceToScreenReader(ttsEnabled ? "Read aloud disabled" : "Read aloud enabled - all responses will be spoken");
+              }}
+              className="shrink-0 flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:scale-105"
+              style={{
+                backgroundColor: ttsEnabled ? "var(--color-success)" : "var(--color-bg-secondary)",
+                color: ttsEnabled ? "#fff" : "var(--color-text-secondary)",
+                border: ttsEnabled ? "2px solid var(--color-success)" : "2px solid var(--color-border)",
+              }}
+              aria-pressed={ttsEnabled}
+              aria-label={ttsEnabled ? "Disable read aloud" : "Enable read aloud"}
+            >
+              {ttsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+              {ttsEnabled ? "Read Aloud: ON" : "Read Aloud: OFF"}
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Actions - Below Language Bar */}
         <div className="flex-shrink-0 px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex flex-wrap gap-2">
             {quickActions.map((action, i) => (
@@ -731,9 +747,22 @@ export default function ChatPage() {
                   >
                     {msg.text}
                   </div>
-                  <p className="text-xs mt-1 px-2" style={{ color: "var(--color-text-muted)" }}>
-                    {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
+                  <div className="flex items-center gap-2 mt-1 px-2">
+                    <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                      {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                    {msg.sender === "bot" && (
+                      <button
+                        onClick={() => speak(msg.text, langToCode(language))}
+                        className="p-1 rounded-md transition-all hover:scale-110"
+                        style={{ color: "var(--color-primary)" }}
+                        aria-label="Read this message aloud"
+                        title="Read Aloud"
+                      >
+                        <Volume2 size={14} />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

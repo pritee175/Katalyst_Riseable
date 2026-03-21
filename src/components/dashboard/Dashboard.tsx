@@ -74,16 +74,13 @@ export default function Dashboard() {
   const maxHours = Math.max(...weeklyData.map(d => d.hours));
 
   return (
-    <div className="min-h-screen relative">
-      {/* Background with image */}
-      <div className="absolute inset-0 opacity-5" aria-hidden="true">
-        <img 
-          src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1920&q=80" 
-          alt=""
-          className="w-full h-full object-cover"
-        />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="blob blob-purple" style={{ width: "500px", height: "500px", top: "-10%", right: "-5%" }} />
+        <div className="blob blob-cyan" style={{ width: "400px", height: "400px", bottom: "10%", left: "-5%" }} />
       </div>
-      <div className="absolute inset-0 particles grid-pattern pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 grid-pattern pointer-events-none" aria-hidden="true" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -93,8 +90,8 @@ export default function Dashboard() {
             <div className="relative">
               <div className="w-16 h-16 rounded-full overflow-hidden ring-4 ring-offset-2 ring-offset-[var(--color-bg)]"
                 style={{ ["--tw-ring-color" as string]: "var(--color-primary)" } as React.CSSProperties}>
-                <img 
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&q=80" 
+                <img
+                  src="https://randomuser.me/api/portraits/women/44.jpg"
                   alt={user.name}
                   className="w-full h-full object-cover"
                 />
@@ -116,7 +113,7 @@ export default function Dashboard() {
         </div>
 
         {/* ===== Stats Grid with Images ===== */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
             { 
               label: "Enrolled Courses", 
@@ -152,17 +149,13 @@ export default function Dashboard() {
             },
           ].map((stat, i) => (
             <div key={stat.label}
-              className="group relative overflow-hidden rounded-2xl border card-hover animate-fade-in-up"
+              className="group relative overflow-hidden rounded-2xl border card-hover glass-card-strong gradient-top-border animate-fade-in-up"
               style={{
-                backgroundColor: "var(--color-bg-card)",
                 borderColor: "var(--color-border)",
                 animationDelay: `${i * 0.1}s`,
               }}>
-              {/* Background image */}
-              <div className="absolute inset-0 opacity-10">
-                <img src={stat.image} alt="" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute inset-0" style={{ background: stat.gradient, opacity: 0.05 }} />
+              {/* Gradient accent */}
+              <div className="absolute inset-0" style={{ background: stat.gradient, opacity: 0.04 }} />
               
               <div className="relative p-5">
                 <div className="flex items-center justify-between mb-4">
@@ -221,9 +214,9 @@ export default function Dashboard() {
                   <defs>
                     {/* Gradient for line */}
                     <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#818cf8" />
-                      <stop offset="50%" stopColor="#a78bfa" />
-                      <stop offset="100%" stopColor="#38bdf8" />
+                      <stop offset="0%" stopColor="#7C3AED" />
+                      <stop offset="50%" stopColor="#A78BFA" />
+                      <stop offset="100%" stopColor="#06B6D4" />
                     </linearGradient>
                     
                     {/* Gradient for area fill */}
@@ -576,7 +569,7 @@ export default function Dashboard() {
                       />
                       <defs>
                         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#818cf8" />
+                          <stop offset="0%" stopColor="#7C3AED" />
                           <stop offset="100%" stopColor="#a78bfa" />
                         </linearGradient>
                       </defs>
@@ -604,15 +597,14 @@ export default function Dashboard() {
                         <span className="text-xs font-bold" style={{ color: p >= 100 ? "var(--color-success)" : "var(--color-primary)" }}>{p}%</span>
                       </div>
                       <div className="h-2 rounded-full overflow-hidden" style={{ backgroundColor: "var(--color-border)" }}>
-                        <div className="h-2 rounded-full transition-all duration-1000 relative overflow-hidden"
+                        <div className="h-2 rounded-full transition-all duration-1000 relative overflow-hidden progress-glow"
                           style={{
                             width: `${p}%`,
                             background: p >= 100
                               ? "linear-gradient(90deg, #34d399, #059669)"
-                              : "linear-gradient(90deg, #818cf8, #a78bfa)",
+                              : "linear-gradient(90deg, var(--color-primary), var(--color-secondary))",
                           }}>
-                          {/* Shine effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" 
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"
                             style={{ backgroundSize: "200% 100%" }} />
                         </div>
                       </div>

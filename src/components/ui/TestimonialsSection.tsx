@@ -63,7 +63,7 @@ export default function TestimonialsSection() {
               {/* Background gradient effect */}
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-3xl"
                 style={{ background: t.gradient }} aria-hidden="true" />
-              
+
               {/* Quote icon with animated background */}
               <div className="relative inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                 style={{ background: `${t.gradient}20` }}>
@@ -76,9 +76,8 @@ export default function TestimonialsSection() {
 
               <div className="relative flex items-center gap-1 mb-5" aria-label={`Rating: ${t.rating} out of 5 stars`}>
                 {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} size={16} fill="var(--color-warning)" style={{ color: "var(--color-warning)" }} 
-                    className="animate-bounce-subtle" 
-                    style={{ animationDelay: `${j * 0.1}s` }}
+                  <Star key={j} size={16} fill="var(--color-warning)" style={{ color: "var(--color-warning)" }}
+                    className="animate-bounce-subtle"
                     aria-hidden="true" />
                 ))}
               </div>
@@ -87,8 +86,8 @@ export default function TestimonialsSection() {
                 {/* Avatar with real photo */}
                 <div className="relative w-14 h-14 rounded-full overflow-hidden transition-all duration-300 group-hover:scale-110 shadow-lg ring-2 ring-offset-2 ring-offset-[var(--color-bg-card)]"
                   style={{ ["--tw-ring-color" as string]: t.gradient } as React.CSSProperties}>
-                  <img 
-                    src={t.image} 
+                  <img
+                    src={t.image}
                     alt={t.name}
                     className="w-full h-full object-cover"
                   />

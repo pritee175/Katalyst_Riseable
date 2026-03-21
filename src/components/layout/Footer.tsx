@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="border-t mt-16"
+      className="border-t mt-16 relative overflow-hidden"
       style={{ backgroundColor: "var(--color-bg-secondary)", borderColor: "var(--color-border)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

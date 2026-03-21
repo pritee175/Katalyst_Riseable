@@ -9,16 +9,40 @@ export function useTextToSpeech() {
 
   const speak = useCallback((text: string, lang = "en-US") => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
+    // Cancel any ongoing speech
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang;
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-    utteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
+
+    const doSpeak = () => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+
+      // Try to find a matching voice for the language
+      const voices = window.speechSynthesis.getVoices();
+      const matchingVoice = voices.find(v => v.lang.startsWith(lang.split('-')[0]));
+      if (matchingVoice) utterance.voice = matchingVoice;
+
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      utteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    };
+
+    // Chrome bug: voices may not be loaded yet
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length === 0) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        doSpeak();
+        window.speechSynthesis.onvoiceschanged = null;
+      };
+      // Fallback if onvoiceschanged never fires
+      setTimeout(doSpeak, 200);
+    } else {
+      doSpeak();
+    }
   }, []);
 
   const stop = useCallback(() => {

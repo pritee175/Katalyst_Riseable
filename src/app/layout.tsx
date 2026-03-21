@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import AccessibilityToolbar from "@/components/accessibility/AccessibilityToolbar";
 import VoiceNavigationLoader from "@/components/accessibility/VoiceNavigationLoader";
 import SignNavigationLoader from "@/components/accessibility/SignNavigationLoader";
+import ScreenReaderLoader from "@/components/accessibility/ScreenReaderLoader";
 
 export const metadata: Metadata = {
   title: "RiseAble — Learn Skills & Find Accessible Jobs",
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
 
             {/* Floating tools */}
+            <ScreenReaderLoader />
             <SignNavigationLoader />
             <AccessibilityToolbar />
             <VoiceNavigationLoader />
