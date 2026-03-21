@@ -747,7 +747,7 @@ export default function ChatPage() {
                     {msg.text}
                   </div>
                   <div className="flex items-center gap-2 mt-1 px-2">
-                    <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                    <p className="text-xs" style={{ color: "var(--color-text-muted)" }} suppressHydrationWarning>
                       {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                     {msg.sender === "bot" && (
