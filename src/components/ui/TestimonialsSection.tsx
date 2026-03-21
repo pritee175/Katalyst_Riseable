@@ -34,26 +34,27 @@ export default function TestimonialsSection() {
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="py-24 px-4 sm:px-6 lg:px-8 relative particles"
+      className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 relative particles"
     >
       <div className="max-w-7xl mx-auto relative">
-        <div className="text-center mb-14">
-          <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "var(--color-secondary)" }}>
+        <div className="text-center mb-8 sm:mb-14">
+          <p className="text-xs font-semibold tracking-widest uppercase mb-2 sm:mb-3" style={{ color: "var(--color-secondary)" }}>
             Testimonials
           </p>
-          <h2 id="testimonials-heading" className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: "var(--color-text)" }}>
+          <h2 id="testimonials-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3" style={{ color: "var(--color-text)" }}>
             Community stories
           </h2>
-          <p className="text-base max-w-lg mx-auto" style={{ color: "var(--color-text-muted)" }}>
+          <p className="text-sm sm:text-base max-w-lg mx-auto" style={{ color: "var(--color-text-muted)" }}>
             Real people, real impact.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* Horizontal scroll on mobile, grid on desktop */}
+        <div className="flex md:grid md:grid-cols-3 gap-4 sm:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0" style={{ scrollbarWidth: "none" }}>
           {testimonials.map((t, i) => (
             <article
               key={t.name}
-              className="group p-7 rounded-2xl border card-hover gradient-border animate-fade-in-up relative overflow-hidden"
+              className="group p-5 sm:p-7 rounded-2xl border card-hover gradient-border animate-fade-in-up relative overflow-hidden min-w-[280px] sm:min-w-[300px] md:min-w-0 snap-start flex-shrink-0 md:flex-shrink"
               style={{
                 backgroundColor: "var(--color-bg-card)",
                 borderColor: "var(--color-border)",

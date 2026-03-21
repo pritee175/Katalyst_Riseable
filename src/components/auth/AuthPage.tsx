@@ -104,7 +104,7 @@ export default function AuthPage() {
   ];
 
   return (
-    <div className="min-h-screen flex relative overflow-hidden">
+    <div className="min-h-screen flex relative overflow-hidden pb-16 md:pb-0">
       {/* Background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="blob blob-purple" style={{ width: "500px", height: "500px", top: "-10%", right: "-5%" }} />
@@ -137,10 +137,10 @@ export default function AuthPage() {
       </div>
 
       {/* Right Panel — Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-12 relative" style={{ backgroundColor: "var(--color-bg)" }}>
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-4 py-6 sm:py-12 relative" style={{ backgroundColor: "var(--color-bg)" }}>
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2" style={{ color: "var(--color-text)" }}>
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: "var(--color-text)" }}>
               {mode === "login" ? "Welcome Back" : "Create Account"}
             </h1>
             <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>

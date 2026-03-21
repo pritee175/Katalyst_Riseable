@@ -602,3 +602,77 @@ body {
   box-shadow: 0 0 8px var(--color-primary), 0 0 16px var(--color-secondary);
   animation: progressGlow 2s ease-in-out infinite;
 }
+
+/* ===== Mobile-First Responsive Styles ===== */
+
+/* Safe area for bottom bar on iOS */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Add bottom padding to main content for bottom tab bar on mobile */
+@media (max-width: 767px) {
+  main, .main-content {
+    padding-bottom: 72px !important;
+  }
+  footer {
+    padding-bottom: 72px !important;
+  }
+  /* Prevent horizontal overflow on mobile */
+  body {
+    overflow-x: hidden;
+  }
+  /* Better touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents iOS zoom on input focus */
+  }
+  /* Make cards stack better */
+  .glass-card, .glass-card-strong {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  /* Full-width stats on very small screens */
+  .stat-card {
+    min-width: 0;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .glass-card, .glass-card-strong {
+    padding: 16px;
+  }
+}
+
+/* Touch-friendly scrolling */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Horizontal scroll container for mobile cards */
+.mobile-scroll-x {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  gap: 12px;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.mobile-scroll-x::-webkit-scrollbar { display: none; }
+.mobile-scroll-x > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Mobile card width variants */
+@media (max-width: 639px) {
+  .mobile-card-full { width: 100% !important; }
+  .mobile-card-85 { width: 85vw !important; max-width: 320px; }
+}

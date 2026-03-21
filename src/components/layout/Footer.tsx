@@ -7,12 +7,12 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="border-t mt-16 relative overflow-hidden"
+      className="border-t mt-8 sm:mt-16 relative overflow-hidden"
       style={{ backgroundColor: "var(--color-bg-secondary)", borderColor: "var(--color-border)" }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="text-lg font-bold flex items-center gap-2">
               <div className="w-7 h-7 rounded-md flex items-center justify-center text-xs font-black text-white"
                 style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}>R</div>

@@ -21,7 +21,7 @@ export default function FeaturesSection() {
       <WaveDivider />
       <section
         aria-labelledby="features-heading"
-        className="py-24 px-4 sm:px-6 lg:px-8 relative"
+        className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 relative"
         style={{ backgroundColor: "var(--color-bg-secondary)" }}
       >
         {/* Background image with overlay */}
@@ -35,19 +35,19 @@ export default function FeaturesSection() {
         <div className="absolute inset-0 grid-pattern pointer-events-none" aria-hidden="true" />
 
         <div className="relative max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "var(--color-primary)" }}>
+          <div className="text-center mb-8 sm:mb-16">
+            <p className="text-xs font-semibold tracking-widest uppercase mb-2 sm:mb-3" style={{ color: "var(--color-primary)" }}>
               Accessibility
             </p>
-            <h2 id="features-heading" className="text-3xl sm:text-4xl font-bold mb-3" style={{ color: "var(--color-text)" }}>
+            <h2 id="features-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3" style={{ color: "var(--color-text)" }}>
               Built for real accessibility
             </h2>
-            <p className="text-base max-w-lg mx-auto" style={{ color: "var(--color-text-muted)" }}>
+            <p className="text-sm sm:text-base max-w-lg mx-auto" style={{ color: "var(--color-text-muted)" }}>
               Not just compliant — designed for users with disabilities.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {features.map((feature, i) => (
               <div
                 key={feature.title}
@@ -64,16 +64,16 @@ export default function FeaturesSection() {
                   aria-hidden="true" />
 
                 {/* Animated icon container */}
-                <div className="relative w-16 h-16 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                   style={{ background: `linear-gradient(135deg, ${feature.color}30, ${feature.color}15)` }}>
-                  <feature.icon size={28} style={{ color: feature.color }} aria-hidden="true" />
+                  <feature.icon className="w-5 h-5 sm:w-7 sm:h-7" style={{ color: feature.color }} aria-hidden="true" />
                   {/* Pulse ring on hover */}
                   <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity animate-pulse"
                     style={{ boxShadow: `0 0 30px ${feature.color}40` }} />
                 </div>
 
-                <h3 className="relative font-semibold text-base mb-2" style={{ color: "var(--color-text)" }}>{feature.title}</h3>
-                <p className="relative text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{feature.description}</p>
+                <h3 className="relative font-semibold text-sm sm:text-base mb-1 sm:mb-2" style={{ color: "var(--color-text)" }}>{feature.title}</h3>
+                <p className="relative text-xs sm:text-sm leading-relaxed hidden sm:block" style={{ color: "var(--color-text-muted)" }}>{feature.description}</p>
               </div>
             ))}
           </div>

@@ -9,7 +9,7 @@ export default function HeroSection() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative min-h-[92vh] flex items-center overflow-hidden particles grid-pattern"
+      className="relative min-h-[80vh] sm:min-h-[92vh] flex items-center overflow-hidden particles grid-pattern"
     >
       {/* Animated gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -26,8 +26,8 @@ export default function HeroSection() {
         <div className="absolute top-1/2 right-1/4 w-2 h-2 rounded-full bg-indigo-400/20 animate-ping" style={{ animationDelay: "2s" }} />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 w-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
           {/* Left — Copy */}
           <div>
@@ -40,23 +40,23 @@ export default function HeroSection() {
 
             <h1
               id="hero-heading"
-              className="animate-fade-in-up delay-100 text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] mb-6 tracking-tight"
+              className="animate-fade-in-up delay-100 text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.12] mb-4 sm:mb-6 tracking-tight"
               style={{ color: "var(--color-text)" }}
             >
               Your abilities{" "}
               <span className="shimmer-text">define you.</span>
             </h1>
 
-            <p className="animate-fade-in-up delay-200 text-lg mb-10 max-w-lg leading-relaxed"
+            <p className="animate-fade-in-up delay-200 text-base sm:text-lg mb-6 sm:mb-10 max-w-lg leading-relaxed"
               style={{ color: "var(--color-text-secondary)" }}>
               Learn accessible skills. Find inclusive jobs. Access government benefits — all in one platform.
             </p>
 
             {/* CTA Buttons */}
-            <div className="animate-fade-in-up delay-300 flex flex-wrap gap-4 mb-12">
+            <div className="animate-fade-in-up delay-300 flex flex-wrap gap-3 sm:gap-4 mb-8 sm:mb-12">
               <Link
                 href="/courses"
-                className="btn-glow inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold text-base transition-all hover:scale-105 animate-glow"
+                className="btn-glow inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl text-white font-semibold text-sm sm:text-base transition-all hover:scale-105 active:scale-95 animate-glow"
                 style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
               >
                 <BookOpen size={18} aria-hidden="true" />
@@ -65,7 +65,7 @@ export default function HeroSection() {
               </Link>
               <Link
                 href="/jobs"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border transition-all hover:scale-105 gradient-border"
+                className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold text-sm sm:text-base border transition-all hover:scale-105 active:scale-95 gradient-border"
                 style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}
               >
                 <Briefcase size={18} aria-hidden="true" />
@@ -128,7 +128,7 @@ export default function HeroSection() {
         </div>
 
         {/* Stats bar */}
-        <div className="animate-fade-in-up delay-500 mt-16 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden glass-card">
+        <div className="animate-fade-in-up delay-500 mt-10 sm:mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden glass-card">
           {[
             { number: "9+", label: "Courses" },
             { number: "50+", label: "Jobs" },

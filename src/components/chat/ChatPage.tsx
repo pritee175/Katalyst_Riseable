@@ -227,11 +227,11 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "var(--color-bg)" }}>
+    <div className="min-h-screen flex flex-col pb-16 md:pb-0" style={{ backgroundColor: "var(--color-bg)" }}>
       {/* Background */}
       <div className="fixed inset-0 opacity-5 pointer-events-none" aria-hidden="true">
-        <img 
-          src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1920&q=80" 
+        <img
+          src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1920&q=80"
           alt=""
           className="w-full h-full object-cover"
         />
@@ -239,23 +239,23 @@ export default function ChatPage() {
       <div className="fixed inset-0 particles grid-pattern pointer-events-none" aria-hidden="true" />
 
       <div className="relative flex-1 flex flex-col overflow-hidden">
-        
-        {/* Comprehensive Accessibility Header */}
-        <header className="flex-shrink-0 px-4 sm:px-6 lg:px-8 pt-4 pb-3 border-b relative z-20" style={{ borderColor: "var(--color-border)" }}>
-          <div className="rounded-2xl border p-3 glass-card" style={{ borderColor: "var(--color-border)" }}>
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              
+
+        {/* Chat Header — compact on mobile */}
+        <header className="flex-shrink-0 px-3 sm:px-6 lg:px-8 pt-2 sm:pt-4 pb-2 sm:pb-3 border-b relative z-20" style={{ borderColor: "var(--color-border)" }}>
+          <div className="rounded-xl sm:rounded-2xl border p-2 sm:p-3 glass-card" style={{ borderColor: "var(--color-border)" }}>
+            <div className="flex items-center justify-between gap-2 sm:gap-3">
+
               {/* Left: Title & Status */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl flex items-center justify-center animate-glow"
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0"
                   style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}>
-                  <Bot size={20} className="text-white" />
+                  <Bot size={18} className="text-white" />
                 </div>
-                <div>
-                  <h1 className="text-xl font-bold" style={{ color: "var(--color-text)" }}>
+                <div className="min-w-0">
+                  <h1 className="text-base sm:text-xl font-bold truncate" style={{ color: "var(--color-text)" }}>
                     AI Assistant
                   </h1>
-                  <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                  <p className="text-[10px] sm:text-xs truncate" style={{ color: "var(--color-text-muted)" }}>
                     Multilingual • Voice • Sign Language
                   </p>
                 </div>
@@ -617,13 +617,12 @@ export default function ChatPage() {
           </div>
         </header>
 
-        {/* Language Select Bar + Read Aloud */}
-        <div className="flex-shrink-0 px-4 sm:px-6 lg:px-8 py-3 border-b" style={{ borderColor: "var(--color-border)" }}>
-          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-            {/* Language Select Box */}
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <Globe size={16} className="shrink-0" style={{ color: "var(--color-text-muted)" }} />
-              <span className="text-xs font-semibold shrink-0 hidden sm:inline" style={{ color: "var(--color-text-muted)" }}>Language:</span>
+        {/* Language + Read Aloud Bar — compact on mobile */}
+        <div className="flex-shrink-0 px-3 sm:px-6 lg:px-8 py-2 sm:py-3 border-b" style={{ borderColor: "var(--color-border)" }}>
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Language Select */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+              <Globe size={14} className="shrink-0" style={{ color: "var(--color-text-muted)" }} />
               <select
                 value={language}
                 onChange={(e) => {
@@ -631,13 +630,12 @@ export default function ChatPage() {
                   setLanguage(newLang);
                   announceToScreenReader(`Language changed to ${languages.find(l => l.code === newLang)?.name}`);
                 }}
-                className="px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold cursor-pointer outline-none w-full sm:w-auto"
+                className="px-2 sm:px-4 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold cursor-pointer outline-none flex-1"
                 style={{
                   backgroundColor: "var(--color-bg-secondary)",
                   color: "var(--color-text)",
                   border: "2px solid var(--color-primary)",
-                  minWidth: "150px",
-                  maxWidth: "220px",
+                  maxWidth: "200px",
                 }}
                 aria-label="Select chat language"
               >
@@ -654,9 +652,9 @@ export default function ChatPage() {
               onClick={() => {
                 setTtsEnabled(!ttsEnabled);
                 if (isSpeaking) stop();
-                announceToScreenReader(ttsEnabled ? "Read aloud disabled" : "Read aloud enabled - all responses will be spoken");
+                announceToScreenReader(ttsEnabled ? "Read aloud disabled" : "Read aloud enabled");
               }}
-              className="shrink-0 flex items-center gap-2 px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:scale-105"
+              className="shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold transition-all active:scale-95"
               style={{
                 backgroundColor: ttsEnabled ? "var(--color-success)" : "var(--color-bg-secondary)",
                 color: ttsEnabled ? "#fff" : "var(--color-text-secondary)",
@@ -666,42 +664,43 @@ export default function ChatPage() {
               aria-label={ttsEnabled ? "Disable read aloud" : "Enable read aloud"}
             >
               {ttsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
-              {ttsEnabled ? "Read Aloud: ON" : "Read Aloud: OFF"}
+              <span className="hidden sm:inline">{ttsEnabled ? "Read Aloud: ON" : "Read Aloud: OFF"}</span>
+              <span className="sm:hidden">{ttsEnabled ? "ON" : "OFF"}</span>
             </button>
           </div>
         </div>
 
-        {/* Quick Actions - Below Language Bar */}
-        <div className="flex-shrink-0 px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex flex-wrap gap-2">
+        {/* Quick Actions — horizontal scroll on mobile */}
+        <div className="flex-shrink-0 px-3 sm:px-6 lg:px-8 py-2 sm:py-3">
+          <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
             {quickActions.map((action, i) => (
               <button
                 key={i}
                 onClick={() => sendMessage(action.text)}
-                className="px-4 py-2 rounded-xl text-sm font-medium transition-all hover:scale-105"
+                className="px-3 sm:px-4 py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all active:scale-95 whitespace-nowrap shrink-0"
                 style={{
                   backgroundColor: "var(--color-bg-secondary)",
                   color: "var(--color-text-secondary)",
                 }}
               >
-                <span className="mr-2">{action.icon}</span>
+                <span className="mr-1.5">{action.icon}</span>
                 {action.text}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Main Chat Area - Full Screen Layout */}
-        <div className="flex-1 flex overflow-hidden px-4 sm:px-6 lg:px-8 py-4">
-          <div className={`flex gap-4 w-full ${signLanguageEnabled ? 'flex-col lg:flex-row' : ''}`}>
-          
-            {/* Chat Messages - Full Height */}
-            <div className={`flex flex-col rounded-2xl border glass-card ${signLanguageEnabled ? 'lg:flex-1' : 'flex-1'}`}
+        {/* Main Chat Area */}
+        <div className="flex-1 flex overflow-hidden px-2 sm:px-6 lg:px-8 py-2 sm:py-4">
+          <div className={`flex gap-3 sm:gap-4 w-full ${signLanguageEnabled ? 'flex-col lg:flex-row' : ''}`}>
+
+            {/* Chat Messages */}
+            <div className={`flex flex-col rounded-xl sm:rounded-2xl border glass-card ${signLanguageEnabled ? 'lg:flex-1' : 'flex-1'}`}
               style={{ borderColor: "var(--color-border)", height: '100%' }}>
-              
+
               {/* Messages Container */}
-              <div className="flex-1 p-6 overflow-y-auto" role="log" aria-label="Chat messages" aria-live="polite">
-                <div className="space-y-4">
+              <div className="flex-1 p-3 sm:p-6 overflow-y-auto touch-scroll" role="log" aria-label="Chat messages" aria-live="polite">
+                <div className="space-y-3 sm:space-y-4">
             {messages.map(msg => (
               <div
                 key={msg.id}
@@ -709,33 +708,33 @@ export default function ChatPage() {
                 role="article"
                 aria-label={`${msg.sender === "user" ? "You" : "AI Assistant"}: ${msg.text}`}
               >
-                {/* Avatar */}
+                {/* Avatar — smaller on mobile */}
                 <div className="shrink-0">
                   {msg.sender === "bot" ? (
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center"
                       style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}>
-                      <Bot size={20} className="text-white" />
+                      <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                   ) : (
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center"
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center"
                       style={{ backgroundColor: "var(--color-bg-secondary)" }}>
                       {isAuthenticated && user ? (
-                        <img 
-                          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&q=80" 
+                        <img
+                          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&q=80"
                           alt={user.name}
                           className="w-full h-full rounded-full object-cover"
                         />
                       ) : (
-                        <UserIcon size={20} style={{ color: "var(--color-text-muted)" }} />
+                        <UserIcon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: "var(--color-text-muted)" }} />
                       )}
                     </div>
                   )}
                 </div>
 
                 {/* Message */}
-                <div className={`flex-1 ${msg.sender === "user" ? "text-right" : "text-left"}`}>
+                <div className={`flex-1 min-w-0 ${msg.sender === "user" ? "text-right" : "text-left"}`}>
                   <div
-                    className={`inline-block max-w-[80%] px-5 py-3 rounded-2xl text-base whitespace-pre-line shadow-sm`}
+                    className={`inline-block max-w-[85%] sm:max-w-[80%] px-3 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base whitespace-pre-line shadow-sm`}
                     style={{
                       backgroundColor: msg.sender === "user" 
                         ? "var(--color-primary)" 
@@ -792,29 +791,29 @@ export default function ChatPage() {
                 </div>
               </div>
 
-              {/* Input Area - Fixed at Bottom */}
-              <div className="flex-shrink-0 border-t p-4" style={{ borderColor: "var(--color-border)" }}>
+              {/* Input Area */}
+              <div className="flex-shrink-0 border-t p-2 sm:p-4" style={{ borderColor: "var(--color-border)" }}>
                 <form
                   onSubmit={e => {
                     e.preventDefault();
                     sendMessage(input);
                   }}
-                  className="flex items-end gap-3"
+                  className="flex items-end gap-2 sm:gap-3"
                 >
                   <button
                     type="button"
                     onClick={handleVoiceInput}
-                    className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all hover:scale-105"
+                    className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all active:scale-90"
                     style={{
                       backgroundColor: isListening ? "var(--color-error)" : "var(--color-bg-secondary)",
                       color: isListening ? "#fff" : "var(--color-text-muted)",
                     }}
                     aria-label={isListening ? "Stop voice input" : "Start voice input"}
                   >
-                    {isListening ? <MicOff size={20} /> : <Mic size={20} />}
+                    {isListening ? <MicOff size={18} /> : <Mic size={18} />}
                   </button>
 
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <textarea
                       ref={inputRef}
                       value={input}
@@ -827,12 +826,13 @@ export default function ChatPage() {
                       }}
                       placeholder={getPlaceholder()}
                       rows={1}
-                      className="w-full px-4 py-3 rounded-xl text-base border-none outline-none resize-none"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl text-sm sm:text-base border-none outline-none resize-none"
                       style={{
                         backgroundColor: "var(--color-bg-secondary)",
                         color: "var(--color-text)",
-                        minHeight: "48px",
-                        maxHeight: "120px"
+                        minHeight: "44px",
+                        maxHeight: "100px",
+                        fontSize: "16px",
                       }}
                       aria-label="Chat message input"
                     />
@@ -841,15 +841,15 @@ export default function ChatPage() {
                   <button
                     type="submit"
                     disabled={!input.trim()}
-                    className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-white transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-white transition-all active:scale-90 disabled:opacity-50"
                     style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
                     aria-label="Send message"
                   >
-                    <Send size={20} />
+                    <Send size={18} />
                   </button>
                 </form>
 
-                <div className="flex items-center justify-between mt-3 text-xs" style={{ color: "var(--color-text-muted)" }}>
+                <div className="hidden sm:flex items-center justify-between mt-3 text-xs" style={{ color: "var(--color-text-muted)" }}>
                   <span>Press Enter to send, Shift+Enter for new line</span>
                   <span className="flex items-center gap-1">
                     <Sparkles size={12} />

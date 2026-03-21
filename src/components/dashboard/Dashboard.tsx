@@ -82,13 +82,13 @@ export default function Dashboard() {
       </div>
       <div className="absolute inset-0 grid-pattern pointer-events-none" aria-hidden="true" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 pb-20 md:pb-8">
 
         {/* ===== Header with Profile Image ===== */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 animate-fade-in-up">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-6 sm:mb-8 animate-fade-in-up">
+          <div className="flex items-center gap-3 sm:gap-4">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full overflow-hidden ring-4 ring-offset-2 ring-offset-[var(--color-bg)]"
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden ring-3 sm:ring-4 ring-offset-2 ring-offset-[var(--color-bg)]"
                 style={{ ["--tw-ring-color" as string]: "var(--color-primary)" } as React.CSSProperties}>
                 <img
                   src="https://randomuser.me/api/portraits/women/44.jpg"
@@ -102,10 +102,10 @@ export default function Dashboard() {
               </div>
             </div>
             <div>
-              <h1 className="text-2xl font-bold" style={{ color: "var(--color-text)" }}>
+              <h1 className="text-lg sm:text-2xl font-bold" style={{ color: "var(--color-text)" }}>
                 Welcome back, {user.name}!
               </h1>
-              <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+              <p className="text-xs sm:text-sm" style={{ color: "var(--color-text-muted)" }}>
                 Keep up the great work on your learning journey
               </p>
             </div>
@@ -113,7 +113,8 @@ export default function Dashboard() {
         </div>
 
         {/* ===== Stats Grid with Images ===== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {/* Stats — 2 cols on mobile like Udemy */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {[
             { 
               label: "Enrolled Courses", 
@@ -178,7 +179,7 @@ export default function Dashboard() {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Weekly Activity Chart */}
-            <section className="rounded-2xl border p-6 glass-card animate-fade-in-up delay-100"
+            <section className="rounded-xl sm:rounded-2xl border p-4 sm:p-6 glass-card animate-fade-in-up delay-100"
               style={{ borderColor: "var(--color-border)" }}>
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
@@ -341,15 +342,15 @@ export default function Dashboard() {
             </section>
 
             {/* My Courses with Images */}
-            <section className="rounded-2xl border p-6 glass-card animate-fade-in-up delay-200"
+            <section className="rounded-xl sm:rounded-2xl border p-4 sm:p-6 glass-card animate-fade-in-up delay-200"
               style={{ borderColor: "var(--color-border)" }}>
-              <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center justify-between mb-4 sm:mb-5">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center"
                     style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}>
-                    <BookOpen size={16} className="text-white" aria-hidden="true" />
+                    <BookOpen size={14} className="text-white" aria-hidden="true" />
                   </div>
-                  <h2 className="text-lg font-bold" style={{ color: "var(--color-text)" }}>My Courses</h2>
+                  <h2 className="text-base sm:text-lg font-bold" style={{ color: "var(--color-text)" }}>My Courses</h2>
                 </div>
                 <Link href="/courses" className="flex items-center gap-1 text-xs font-medium transition-colors hover:underline" style={{ color: "var(--color-primary)" }}>
                   Browse All <ArrowRight size={12} />
@@ -374,10 +375,10 @@ export default function Dashboard() {
                     const progress = user.courseProgress[course.id] ?? 0;
                     return (
                       <div key={course.id}
-                        className="group flex items-center gap-4 p-4 rounded-xl border transition-all hover:border-[rgba(129,140,248,0.3)] animate-fade-in-up"
+                        className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border transition-all hover:border-[rgba(129,140,248,0.3)] active:scale-[0.98] animate-fade-in-up"
                         style={{ backgroundColor: "var(--color-bg-secondary)", borderColor: "transparent", animationDelay: `${0.3 + i * 0.08}s` }}>
 
-                        <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 transition-transform group-hover:scale-105">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl overflow-hidden shrink-0 transition-transform group-hover:scale-105">
                           <img 
                             src={course.thumbnail} 
                             alt={course.title}
